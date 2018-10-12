@@ -8,7 +8,7 @@
 //The constructor's prototype is NOT the protype of the constructor itself, its the prototype of ALL instances that are created through it.
 //When a certain method (or property) is called, the search starts in the object itself, and if it cannot be found, the search moves on the object's protype. This continues until the metho is found: PROTOTYPE CHAIN
 
-
+/*
 
 // Object Literal
 var John = {
@@ -52,3 +52,64 @@ mark.calcAge();
 console.log(john.lastName);
 console.log(jane.lastName);
 console.log(mark.lastName);
+
+
+*/
+
+
+
+//Object.create Method
+//First define an object that acts a protype. And then create a new object to use the prototype
+//Object.create method inherits from the object we create, whereas Function constructor inherts from the constructor's prototype property.
+
+
+var personProto = {
+	calcAge: function(){
+		console.log(2016-this.yearOfBirth);
+	}
+};
+
+var john = Object.create(personProto);
+john.name = 'John';
+john.yearOfBirth = 1990;
+john.job = "teacher";
+
+var jane = Object.create(personProto,
+{
+	name: {value: 'Jane'},
+	yearOfBirth: {value: 1969},
+	job:{value: 'designer'	}
+});
+
+
+
+
+
+//Primitves vs Objects
+
+//Primitive types - numbers, strings, boolean, null
+//PRIMITIVES -- Var contatining primitives hold data inside the variable itself
+
+var a = 23;
+var b = a;
+a = 46;
+console.log(a);
+console.log(b);
+
+
+
+//Objects are everything else other than listed above
+//OBJECTS -- var associated with objects, do not contatin the objects itself, but contains the reference to the object in memory.
+
+
+var obj1 = {
+	name:'John',
+	age:26
+};
+
+var obj2 = obj1;
+obj1.age = 30;
+console.log(obj1);
+console.log(obj2);
+
+ // >>In this case obj2 also changed when obj1 becayse, [obj2=obj1] does not copy the contents, but only copies the reference pointer. Hence when obj1 changed, obj2 also changed.
