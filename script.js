@@ -54,7 +54,7 @@ console.log(jane.lastName);
 console.log(mark.lastName);
 
 
-*/
+
 
 
 
@@ -113,3 +113,89 @@ console.log(obj1);
 console.log(obj2);
 
  // >>In this case obj2 also changed when obj1 becayse, [obj2=obj1] does not copy the contents, but only copies the reference pointer. Hence when obj1 changed, obj2 also changed.
+
+
+
+ //Functions are also objects. Function is an instance of Object type.
+ //Functions can accept other functions are parameters
+
+var years = [1990,1965,1937,2005,1998];
+
+//Creating Generic function
+//passing in array and a function into the function-calcAge
+function arrayCalc(arr, fn){
+	var arrRes = [];
+	for(var i=0;i<arr.length; i++){
+		arrRes.push(fn(arr[i]));
+	}
+	return arrRes;
+}
+
+
+//callback function fn - to push new 
+//el - years
+function calculateAge(el){
+	return 2016 - el;
+}
+
+//Creating callback function for Generic function
+// el - ages
+function isFullAge(el){
+	return el>=18;
+}
+
+////Creating callback function for Generic function
+//Calculating max heart rate  >> el - ages
+function maxHeartRate(el){
+	if(el>=18 && el<81){
+		return Math.round(206.9 - (0.67*el));	
+	}else{
+		return -1;
+	}	
+}
+
+
+
+var ages = arrayCalc(years, calculateAge);
+console.log(ages);
+
+var fullAges = arrayCalc(ages, isFullAge);
+console.log(fullAges);
+
+var maxHR = arrayCalc(ages, maxHeartRate);
+console.log(maxHR);
+
+*/
+
+
+
+//Functions returning other functions
+//Functions are always FIRSTCLASS FUNCTIONS in JS. Because functions are also objects.
+
+
+function interviewQuestion(job){
+	if(job=='designer'){
+		return function(name){    //returning anonymus function
+			console.log(name + ' Can you explain more about UX design?');
+		}	
+	}else if(job=='teacher'){
+		return function(name){
+			console.log(name + ', What courses do you teach?');
+		}
+	}else{
+		return function(name){
+			console.log("What do you do?");
+		}
+	}
+}
+
+
+//Two ways to call the above func
+
+var teacherQuestion = interviewQuestion('teacher');
+teacherQuestion('Peter');
+
+//OR
+
+//Since JS Evaluates from LEFT to RIGHT,  first it will evaluate interviewQuestion("teacher") AND THEN  [interviewQuestion("teacher")] ('Peter')
+interviewQuestion("teacher")('Peter');			
