@@ -165,12 +165,12 @@ console.log(fullAges);
 var maxHR = arrayCalc(ages, maxHeartRate);
 console.log(maxHR);
 
-*/
+
 
 
 
 //Functions returning other functions
-//Functions are always FIRSTCLASS FUNCTIONS in JS. Because functions are also objects.
+//Functions are always FIRSTCLASS FUNCTIONS in JS. Because functions are also objects. It may also be called first class objects.
 
 
 function interviewQuestion(job){
@@ -184,7 +184,7 @@ function interviewQuestion(job){
 		}
 	}else{
 		return function(name){
-			console.log("What do you do?");
+			console.log(name +", What do you do?");
 		}
 	}
 }
@@ -193,9 +193,62 @@ function interviewQuestion(job){
 //Two ways to call the above func
 
 var teacherQuestion = interviewQuestion('teacher');
-teacherQuestion('Peter');
+teacherQuestion('Mark');
 
 //OR
 
 //Since JS Evaluates from LEFT to RIGHT,  first it will evaluate interviewQuestion("teacher") AND THEN  [interviewQuestion("teacher")] ('Peter')
-interviewQuestion("teacher")('Peter');			
+interviewQuestion("teacher")('Mark');
+interviewQuestion()("Tim");			
+
+
+
+
+
+//Objects and functions
+//Immediately Invoke Function Expressions (IIFE)
+
+//Normal function declaration
+function add(){
+	var num = 5;
+	console.log(num>=5);
+}
+add();
+
+
+//IIFE
+(function (){
+	var num = 5;
+	console.log(num>=5);
+})();
+
+
+
+//Add parameters to IIFE function
+(function (p){
+	var num = 5-p;
+	console.log(num>=5);
+})(3);
+
+
+*/
+
+
+
+
+//CLOSURES
+//The inner function has always accessed to the variables and paramters of its outer function, even after the function has returned
+
+function retirement(retAge){
+		var a = ' years left until retirment.';    //Function below can access this variable. its the concept of closures
+		return	function(yearOfBirth){				//Retirement function is returning.
+			var age = 2016 - yearOfBirth;
+			console.log((retAge-age)+ a);	
+		}
+
+}
+
+//retAge - set based on the country by user
+var retirementUS = retirement(66)(1990);  //US retirement age is 66 and year of birth is 1990
+var retirementCAN = retirement(65)(1990);
+var retirementICELAND = retirement(67)(1990);				
